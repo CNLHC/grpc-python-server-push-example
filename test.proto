@@ -1,0 +1,17 @@
+
+syntax = "proto3";
+
+service pushServer{
+    rpc somethingNew(stream req) returns (stream res){}
+    rpc justHello(req) returns (res){}
+}
+
+message req{
+    string foo=1;
+}
+
+message res{
+    string bar=1;
+    string key=2;
+
+}

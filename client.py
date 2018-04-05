@@ -6,27 +6,26 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser = argparse.ArgumentParser(description='Description of your program')
-parser.add_argument('-i', '--id', help='ID of this client',
-                    required=True, type=int)
+parser.add_argument('-n', '--name', help='name of this client',
+                    required=True, type=str)
 
+def ChannelMonitor(ChannelConnectivity):
+    print(ChannelConnectivity)
 
-def genReq():
-    a = [test_pb2.req(foo="bar")]
-    for i in a:
-        yield i
-
-
-def run(idx):
+def run(name):
     channel = grpc.insecure_channel("localhost:50051")
+
+    channel.subscribe(ChannelMonitor)
+
     stub = test_pb2_grpc.pushServerStub(channel)
-    m = stub.justHello(test_pb2.req(
-        foo="foo"), metadata=(("index", str(idx)),))
-    print(m)
-    m = stub.somethingNew(genReq(), metadata=(("index", str(idx)),))
-    for i in m:
-        print(i)
+
+    responser = stub.subscribe(test_pb2.clientInfo(name=name))
+    
+    while True:
+        print(responser.next().info)
+
 
 if __name__ == '__main__':
     args = vars(parser.parse_args())
-    ID = args['id']
-    run(ID)
+    name = args['name']
+    run(name)

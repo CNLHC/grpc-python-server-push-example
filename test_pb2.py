@@ -19,21 +19,21 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='test.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\ntest.proto\"\x12\n\x03req\x12\x0b\n\x03\x66oo\x18\x01 \x01(\t\"\x1f\n\x03res\x12\x0b\n\x03\x62\x61r\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t2I\n\npushServer\x12 \n\x0csomethingNew\x12\x04.req\x1a\x04.res\"\x00(\x01\x30\x01\x12\x19\n\tjustHello\x12\x04.req\x1a\x04.res\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\ntest.proto\"\x1a\n\nclientInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x18\n\x08response\x12\x0c\n\x04info\x18\x01 \x01(\t25\n\npushServer\x12\'\n\tsubscribe\x12\x0b.clientInfo\x1a\t.response\"\x00\x30\x01\x62\x06proto3')
 )
 
 
 
 
-_REQ = _descriptor.Descriptor(
-  name='req',
-  full_name='req',
+_CLIENTINFO = _descriptor.Descriptor(
+  name='clientInfo',
+  full_name='clientInfo',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='foo', full_name='req.foo', index=0,
+      name='name', full_name='clientInfo.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -52,27 +52,20 @@ _REQ = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=14,
-  serialized_end=32,
+  serialized_end=40,
 )
 
 
-_RES = _descriptor.Descriptor(
-  name='res',
-  full_name='res',
+_RESPONSE = _descriptor.Descriptor(
+  name='response',
+  full_name='response',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='bar', full_name='res.bar', index=0,
+      name='info', full_name='response.info', index=0,
       number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='key', full_name='res.key', index=1,
-      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -89,27 +82,27 @@ _RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=34,
-  serialized_end=65,
+  serialized_start=42,
+  serialized_end=66,
 )
 
-DESCRIPTOR.message_types_by_name['req'] = _REQ
-DESCRIPTOR.message_types_by_name['res'] = _RES
+DESCRIPTOR.message_types_by_name['clientInfo'] = _CLIENTINFO
+DESCRIPTOR.message_types_by_name['response'] = _RESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-req = _reflection.GeneratedProtocolMessageType('req', (_message.Message,), dict(
-  DESCRIPTOR = _REQ,
+clientInfo = _reflection.GeneratedProtocolMessageType('clientInfo', (_message.Message,), dict(
+  DESCRIPTOR = _CLIENTINFO,
   __module__ = 'test_pb2'
-  # @@protoc_insertion_point(class_scope:req)
+  # @@protoc_insertion_point(class_scope:clientInfo)
   ))
-_sym_db.RegisterMessage(req)
+_sym_db.RegisterMessage(clientInfo)
 
-res = _reflection.GeneratedProtocolMessageType('res', (_message.Message,), dict(
-  DESCRIPTOR = _RES,
+response = _reflection.GeneratedProtocolMessageType('response', (_message.Message,), dict(
+  DESCRIPTOR = _RESPONSE,
   __module__ = 'test_pb2'
-  # @@protoc_insertion_point(class_scope:res)
+  # @@protoc_insertion_point(class_scope:response)
   ))
-_sym_db.RegisterMessage(res)
+_sym_db.RegisterMessage(response)
 
 
 
@@ -119,25 +112,16 @@ _PUSHSERVER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=67,
-  serialized_end=140,
+  serialized_start=68,
+  serialized_end=121,
   methods=[
   _descriptor.MethodDescriptor(
-    name='somethingNew',
-    full_name='pushServer.somethingNew',
+    name='subscribe',
+    full_name='pushServer.subscribe',
     index=0,
     containing_service=None,
-    input_type=_REQ,
-    output_type=_RES,
-    options=None,
-  ),
-  _descriptor.MethodDescriptor(
-    name='justHello',
-    full_name='pushServer.justHello',
-    index=1,
-    containing_service=None,
-    input_type=_REQ,
-    output_type=_RES,
+    input_type=_CLIENTINFO,
+    output_type=_RESPONSE,
     options=None,
   ),
 ])

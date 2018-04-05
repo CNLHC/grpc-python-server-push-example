@@ -14,15 +14,10 @@ class pushServerStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.somethingNew = channel.stream_stream(
-        '/pushServer/somethingNew',
-        request_serializer=test__pb2.req.SerializeToString,
-        response_deserializer=test__pb2.res.FromString,
-        )
-    self.justHello = channel.unary_unary(
-        '/pushServer/justHello',
-        request_serializer=test__pb2.req.SerializeToString,
-        response_deserializer=test__pb2.res.FromString,
+    self.subscribe = channel.unary_stream(
+        '/pushServer/subscribe',
+        request_serializer=test__pb2.clientInfo.SerializeToString,
+        response_deserializer=test__pb2.response.FromString,
         )
 
 
@@ -30,14 +25,7 @@ class pushServerServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def somethingNew(self, request_iterator, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def justHello(self, request, context):
+  def subscribe(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -47,15 +35,10 @@ class pushServerServicer(object):
 
 def add_pushServerServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'somethingNew': grpc.stream_stream_rpc_method_handler(
-          servicer.somethingNew,
-          request_deserializer=test__pb2.req.FromString,
-          response_serializer=test__pb2.res.SerializeToString,
-      ),
-      'justHello': grpc.unary_unary_rpc_method_handler(
-          servicer.justHello,
-          request_deserializer=test__pb2.req.FromString,
-          response_serializer=test__pb2.res.SerializeToString,
+      'subscribe': grpc.unary_stream_rpc_method_handler(
+          servicer.subscribe,
+          request_deserializer=test__pb2.clientInfo.FromString,
+          response_serializer=test__pb2.response.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

@@ -2,16 +2,13 @@
 syntax = "proto3";
 
 service pushServer{
-    rpc somethingNew(stream req) returns (stream res){}
-    rpc justHello(req) returns (res){}
+    rpc subscribe(clientInfo) returns (stream response){}
 }
 
-message req{
-    string foo=1;
+message clientInfo{
+    string name=1;
 }
 
-message res{
-    string bar=1;
-    string key=2;
-
+message response{
+    string info=1;
 }

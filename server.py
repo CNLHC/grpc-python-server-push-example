@@ -4,41 +4,41 @@ import grpc
 import time
 import queue
 from concurrent import futures
+import sys
 import asyncio
 import functools
 import threading
-
-
 queueList={}
 
 def blockInput(loop):
-    s=input(">>").split(':')
-    if len(s)==2: 
+    s=input(">>")
+    if len(s.split(':'))==2: 
+        s=s.split(':')
         if queueList.get(s[0],None)!=None:
             queueList[s[0]].put(s[1])
-            print ("\nSend message to %s"%s[0])
+            print ("Send message to %s"%s[0])
+    elif(s=='list'):
+        print("Subscribed List:")
+        print("---------------------------------")
+        for n,i in enumerate(queueList.keys()):
+            print("\t %d:%s"%(n+1,i))
+
     loop.run_in_executor(None,functools.partial(blockInput,loop))
 
 class justServer(test_pb2_grpc.pushServerServicer):
     """just Server""" 
-
-    def justHello(self,re,conte):
-        meta=conte.invocation_metadata()
-        a=test_pb2.res(key="just Hello",bar="I'm server and i know you are No.%s"%meta[0].value) 
-        return a
-
-    def somethingNew(self,req,cont):
-        a=test_pb2.res(key="newthing",bar="sads")
-        print("\n============")
+    def subscribe(self,req,cont):
+        print("Get Subscribed")
         print(cont.peer())
-        print(cont.invocation_metadata())
-        print(">>")
-        idx=cont.invocation_metadata()[0].value
-        que=queueList[str(idx)]=queue.Queue()
+        sys.stdout.write(">>")
+        sys.stdout.flush()
+
+        if queueList.get(req.name,None)==None:
+            queueList[req.name]=queue.Queue()
+        que=queueList[req.name]
+
         while True:
-            f=que.get()
-            a.bar=f
-            yield  a
+            yield  test_pb2.response(info=que.get())
         
 def server():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -47,7 +47,6 @@ def server():
     server.start()
     while True:
         pass
-
 
 
 if __name__=="__main__":

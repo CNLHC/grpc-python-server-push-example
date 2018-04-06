@@ -3,6 +3,7 @@ syntax = "proto3";
 
 service pushServer{
     rpc subscribe(clientInfo) returns (stream response){}
+    rpc heartbeat(stream heartbeatReq) returns(stream heartbeatReq){}
 }
 
 message clientInfo{
@@ -11,4 +12,12 @@ message clientInfo{
 
 message response{
     string info=1;
+}
+
+message heartbeatReq{
+    string name=1;
+}
+
+message heartbeatRes{
+    bool status=1;
 }

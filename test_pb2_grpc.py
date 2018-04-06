@@ -19,6 +19,11 @@ class pushServerStub(object):
         request_serializer=test__pb2.clientInfo.SerializeToString,
         response_deserializer=test__pb2.response.FromString,
         )
+    self.heartbeat = channel.stream_stream(
+        '/pushServer/heartbeat',
+        request_serializer=test__pb2.heartbeatReq.SerializeToString,
+        response_deserializer=test__pb2.heartbeatReq.FromString,
+        )
 
 
 class pushServerServicer(object):
@@ -32,6 +37,13 @@ class pushServerServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def heartbeat(self, request_iterator, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_pushServerServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -39,6 +51,11 @@ def add_pushServerServicer_to_server(servicer, server):
           servicer.subscribe,
           request_deserializer=test__pb2.clientInfo.FromString,
           response_serializer=test__pb2.response.SerializeToString,
+      ),
+      'heartbeat': grpc.stream_stream_rpc_method_handler(
+          servicer.heartbeat,
+          request_deserializer=test__pb2.heartbeatReq.FromString,
+          response_serializer=test__pb2.heartbeatReq.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

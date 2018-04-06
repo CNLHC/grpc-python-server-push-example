@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='test.proto',
   package='',
   syntax='proto3',
-  serialized_pb=_b('\n\ntest.proto\"\x1a\n\nclientInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x18\n\x08response\x12\x0c\n\x04info\x18\x01 \x01(\t25\n\npushServer\x12\'\n\tsubscribe\x12\x0b.clientInfo\x1a\t.response\"\x00\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\ntest.proto\"\x1a\n\nclientInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x18\n\x08response\x12\x0c\n\x04info\x18\x01 \x01(\t\"\x1c\n\x0cheartbeatReq\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1e\n\x0cheartbeatRes\x12\x0e\n\x06status\x18\x01 \x01(\x08\x32\x66\n\npushServer\x12\'\n\tsubscribe\x12\x0b.clientInfo\x1a\t.response\"\x00\x30\x01\x12/\n\theartbeat\x12\r.heartbeatReq\x1a\r.heartbeatReq\"\x00(\x01\x30\x01\x62\x06proto3')
 )
 
 
@@ -86,8 +86,72 @@ _RESPONSE = _descriptor.Descriptor(
   serialized_end=66,
 )
 
+
+_HEARTBEATREQ = _descriptor.Descriptor(
+  name='heartbeatReq',
+  full_name='heartbeatReq',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='heartbeatReq.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=68,
+  serialized_end=96,
+)
+
+
+_HEARTBEATRES = _descriptor.Descriptor(
+  name='heartbeatRes',
+  full_name='heartbeatRes',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='status', full_name='heartbeatRes.status', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=98,
+  serialized_end=128,
+)
+
 DESCRIPTOR.message_types_by_name['clientInfo'] = _CLIENTINFO
 DESCRIPTOR.message_types_by_name['response'] = _RESPONSE
+DESCRIPTOR.message_types_by_name['heartbeatReq'] = _HEARTBEATREQ
+DESCRIPTOR.message_types_by_name['heartbeatRes'] = _HEARTBEATRES
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 clientInfo = _reflection.GeneratedProtocolMessageType('clientInfo', (_message.Message,), dict(
@@ -104,6 +168,20 @@ response = _reflection.GeneratedProtocolMessageType('response', (_message.Messag
   ))
 _sym_db.RegisterMessage(response)
 
+heartbeatReq = _reflection.GeneratedProtocolMessageType('heartbeatReq', (_message.Message,), dict(
+  DESCRIPTOR = _HEARTBEATREQ,
+  __module__ = 'test_pb2'
+  # @@protoc_insertion_point(class_scope:heartbeatReq)
+  ))
+_sym_db.RegisterMessage(heartbeatReq)
+
+heartbeatRes = _reflection.GeneratedProtocolMessageType('heartbeatRes', (_message.Message,), dict(
+  DESCRIPTOR = _HEARTBEATRES,
+  __module__ = 'test_pb2'
+  # @@protoc_insertion_point(class_scope:heartbeatRes)
+  ))
+_sym_db.RegisterMessage(heartbeatRes)
+
 
 
 _PUSHSERVER = _descriptor.ServiceDescriptor(
@@ -112,8 +190,8 @@ _PUSHSERVER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   options=None,
-  serialized_start=68,
-  serialized_end=121,
+  serialized_start=130,
+  serialized_end=232,
   methods=[
   _descriptor.MethodDescriptor(
     name='subscribe',
@@ -122,6 +200,15 @@ _PUSHSERVER = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_CLIENTINFO,
     output_type=_RESPONSE,
+    options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='heartbeat',
+    full_name='pushServer.heartbeat',
+    index=1,
+    containing_service=None,
+    input_type=_HEARTBEATREQ,
+    output_type=_HEARTBEATREQ,
     options=None,
   ),
 ])
